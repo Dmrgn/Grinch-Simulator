@@ -103,7 +103,7 @@ pub const Player = struct {
             .height= drawWidth,
         };
         const dirToMouse: f32 = (Vector2.sub(raylib.GetMousePosition(), Vector2{.x=@intToFloat(f32, screenWidth/2), .y=@intToFloat(f32, screenHeight/2)}).angle()/raylib.PI)*180;
-        raylib.DrawTexturePro(TextureLoader.playerTexture, playerSrcRect, playerDestRect, playerSrcRect.size(), dirToMouse+90, raylib.WHITE);
+        raylib.DrawTexturePro(TextureLoader.playerTexture, playerSrcRect, playerDestRect, playerSrcRect.size().add(Vector2{.x=10,.y=5}), dirToMouse+90, raylib.WHITE);
     }
 };
 
