@@ -159,7 +159,7 @@ pub const Wall = struct {
         topPos = raylib.Vector2.sub(topPos, Main.camera.target);
         topPos = topPos.scale(height);
         topPos = raylib.Vector2.add(topPos, Main.camera.target);
-        const shiftAmount: f32 = (height-1)*86;
+        const shiftAmount: f32 = (height-1)*78;
         return Rectangle {
             .x= topPos.x-rect.width/2-shiftAmount,
             .y= topPos.y-rect.height/2-shiftAmount,
@@ -195,8 +195,8 @@ pub const Wall = struct {
         const maxTopRect: Rectangle = calcTopRect(this.drawRect, @intToFloat(f32, this.height)*heightScaleAmount*heightScaleAmount);
         var i: i32 = 0;
         while (i < this.height) : (i+=1) {
-            const adjust: f32 = if (this.height == 1) 0 else if (i == 0) -0.2 else if (i == this.height-1) 0.2 else 0;
-            const prevAdjust: f32 = if (this.height == 1) 0 else if (i == 1) -0.2 else 0;
+            const adjust: f32 = if (this.height == 1) 0 else if (i == 0) -0.1 else if (i == this.height-1) 0.1 else 0;
+            const prevAdjust: f32 = if (this.height == 1) 0 else if (i == 1) -0.1 else 0;
             const topTopLeft = Vector2.lerp(this.drawRect.topLeft(), maxTopRect.topLeft(), (@intToFloat(f32, i+1)/@intToFloat(f32, this.height)) + adjust);
             const topBottomRight = Vector2.lerp(this.drawRect.bottomRight(), maxTopRect.bottomRight(), (@intToFloat(f32, i+1)/@intToFloat(f32, this.height)) + adjust);
             const topSize = Vector2.sub(topBottomRight, topTopLeft);
