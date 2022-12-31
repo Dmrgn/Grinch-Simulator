@@ -167,7 +167,7 @@ fn update(_: f32) !void {
 
             Graphics.renderLight();
 
-            Graphics.drawObjects();
+            try Graphics.drawObjects();
 
             Graphics.drawLightMask();
 

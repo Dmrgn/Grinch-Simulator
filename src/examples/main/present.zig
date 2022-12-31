@@ -18,36 +18,56 @@ pub const Present = struct {
     isCollected: bool = false,
     fade: f32 = 0.0,
 
-    pub fn createPresents() !void {
-        for (Maze.maze.maze[0..Maze.maze.maze.len-2]) |_, i| {
-            for (Maze.maze.maze[i][0..Maze.maze.maze[i].len-2]) |_, j| {
-                // if this is a valid square
-                if (Maze.maze.maze[i][j] == 0 and
-                    Maze.maze.maze[i+1][j] == 0 and
-                    Maze.maze.maze[i][j+1] == 0 and
-                    Maze.maze.maze[i+1][j+1] == 0 and
-                    raylib.GetRandomValue(0, 10) == 0)
-                {
-                    const worldCoords = Maze.MazeType.mazeToWorld(Vector2 {.x=@intToFloat(f32, j)+1, .y=@intToFloat(f32, i)+1});
-                    try presents.append(Present {
-                        .rect = Rectangle {
-                            .x= worldCoords.x-presentWidth/2,
-                            .y= worldCoords.y-presentWidth/2,
-                            .width= presentWidth,
-                            .height= presentWidth,
-                        },
-                        .col = raylib.RED,
-                    });
+    pub fn spawnPresent() !void {
+        var wasPlaced: bool = false;
+        while (!wasPlaced) {
+            const genX = raylib.GetRandomValue(0, Maze.maze.maze[0].len-2);
+            const genY = raylib.GetRandomValue(0, Maze.maze.maze[0].len-2);
+            const worldCoords = Maze.MazeType.mazeToWorld(Vector2 {.x=@intToFloat(f32, genX)+1, .y=@intToFloat(f32, genY)+1});
+            // if this is a valid square
+            if (Maze.maze.maze[@intCast(usize, genY)][@intCast(usize, genX)] == 0 and
+                Maze.maze.maze[@intCast(usize, genY+1)][@intCast(usize, genX)] == 0 and
+                Maze.maze.maze[@intCast(usize, genY)][@intCast(usize, genX+1)] == 0 and
+                Maze.maze.maze[@intCast(usize, genY+1)][@intCast(usize, genX+1)] == 0 and
+                Vector2.distanceTo(Player.player.rect.center(), worldCoords) > 700)
+            {
+                var isValid: bool = true;
+                for (presents.items) |_, i| {
+                    const presPos = Maze.MazeType.worldToMaze(presents.items[i].rect.pos());
+                    if (@floatToInt(i32, presPos.x) == genX and @floatToInt(i32, presPos.y) == genY) {
+                        isValid = false;
+                        break;
+                    }
                 }
+                if (!isValid) continue;
+                wasPlaced = true;
+                try presents.append(Present {
+                    .rect = Rectangle {
+                        .x= worldCoords.x-presentWidth/2,
+                        .y= worldCoords.y-presentWidth/2,
+                        .width= presentWidth,
+                        .height= presentWidth,
+                    },
+                    .col = raylib.RED,
+                });
             }
+
         }
     }
 
-    pub fn update(this: *Present, index: usize) void {
+    pub fn createPresents() !void {
+        var i: usize = 0;
+        while (i < 40) : (i+=1) {
+            try spawnPresent();
+        }
+    }
+
+    pub fn update(this: *Present, index: usize) !void {
         if (this.isCollected) {
             this.fade+=0.1;
             if (this.fade > 1.0) {
                 _ = presents.swapRemove(index);
+                try spawnPresent();
             }
         } else {
             // check collision with player

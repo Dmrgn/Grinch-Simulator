@@ -17,7 +17,7 @@ const PathFinder = @import("pathfinder.zig");
 const drag: f32 = 0.8;
 const maxLaughCoolDown = 120;
 
-const farLockRange: f32 = 1500;     // if the player is past this number then lock onto them
+const farLockRange: f32 = 1250;     // if the player is past this number then lock onto them
 const closeLockRange: f32 = 700;    // if the player is within this number then lock onto them
 const jumpScareRange: f32 = 100;    // if the player is within this range then may only god help them
                                     // otherwise wander

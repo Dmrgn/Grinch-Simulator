@@ -37,7 +37,7 @@ pub fn renderLight() void {
 }
 
 // draw game objects to the target texture
-pub fn drawObjects() void {
+pub fn drawObjects() !void {
     raylib.BeginTextureMode(targetTexture);
     defer raylib.EndTextureMode();
     raylib.BeginMode2D(Main.camera);
@@ -52,7 +52,7 @@ pub fn drawObjects() void {
     Player.player.draw();
     // draw presents
     for (Present.presents.items) |_, i| {
-        Present.presents.items[i].update(i);
+        try Present.presents.items[i].update(i);
         Present.presents.items[i].draw();
     }
     // draw the enemy
