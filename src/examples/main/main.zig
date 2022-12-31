@@ -27,6 +27,7 @@ pub var alloc: std.mem.Allocator = undefined;
 
 pub var frameCount: i64 = 0;
 pub var score: i32 = 0;
+pub var prevScore: ?i32 = null;
 pub var gameState: GameState = GameState.Menu;
 pub var menuTransitionAmount: f32 = 0;
 pub var jumpScareTransitionAmount: f32 = 0;
@@ -108,6 +109,8 @@ pub fn endGame() void {
     // end music streams
     raylib.StopMusicStream(Sound.music);
     raylib.StopMusicStream(Sound.chaseMusic);
+    // swap scores
+    prevScore = score;
     // restart the game
     startMenu();
 }

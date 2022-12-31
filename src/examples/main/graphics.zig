@@ -152,6 +152,11 @@ pub fn drawMenu() !void {
     }
     // draw prompt
     raylib.DrawText("click to enter the city", Main.screenWidth/2-200, Main.screenHeight/2-20, 32, Color.lerp(raylib.WHITE, raylib.BLACK, Main.menuTransitionAmount));
+    // draw previous score
+    if (Main.prevScore != null) {
+        var buf: [64]u8 = undefined;
+        raylib.DrawText(try std.fmt.bufPrintZ(&buf, "Score: {d}", .{Main.prevScore.?}), Main.screenWidth/20, Main.screenWidth/20, 32, raylib.WHITE);
+    }
 }
 
 // draw the ui to the screen
