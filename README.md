@@ -2,6 +2,8 @@
 
 The Grinch has no-clipped out of reality and into a desolate city! Help him steal all their presents and avoid being caught by Santa.
 
+[Demo video](https://youtu.be/v1pUm38jRmk)
+
 ## Inspiration 🤔
 
 Grinch Simulator's art style was inspired by classic 80s games. I actually used the NES's colour palette to draw all the textures. Gameplay wise, I took inspiration from the popular genre of maze horror games like [Labyrinthine](https://store.steampowered.com/app/1302240/Labyrinthine/), and [The Backrooms](https://store.steampowered.com/app/1111210/The_Backrooms_Game_FREE_Edition/). These games use the uncanny feeling of desolation and loneliness among a familiar environment to build suspense. I also heavily relied on music and sound effects, which I took from open source projects, in order to create a thematic environment.
